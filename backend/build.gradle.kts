@@ -22,12 +22,10 @@ repositories {
 extra["springModulithVersion"] = "1.1.2"
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-jooq")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.liquibase:liquibase-core")
 	implementation("org.springframework.modulith:spring-modulith-starter-core")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.modulith:spring-modulith-starter-test")
