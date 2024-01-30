@@ -1,6 +1,6 @@
 package com.github.michalperlak.flashcards.cards.dto
 
-import com.github.michalperlak.flashcards.cards.Card
+import com.github.michalperlak.flashcards.cards.model.Card
 
 class CardDto {
 

@@ -2,6 +2,8 @@ package com.github.michalperlak.flashcards.cards
 
 import com.github.michalperlak.flashcards.cards.dto.CardDto
 import com.github.michalperlak.flashcards.cards.dto.NewCardDto
+import com.github.michalperlak.flashcards.cards.model.Card
+import com.github.michalperlak.flashcards.cards.model.CardId
 import com.github.michalperlak.flashcards.users.UserId
 import com.github.mpps.fsrs.model.State
 import org.springframework.http.ResponseEntity

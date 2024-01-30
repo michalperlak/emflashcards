@@ -1,6 +1,8 @@
 package com.github.michalperlak.flashcards.cards
 
 import com.github.michalperlak.flashcards.cards.dto.NewCardDto
+import com.github.michalperlak.flashcards.cards.model.Card
+import com.github.michalperlak.flashcards.cards.model.CardId
 import com.github.michalperlak.flashcards.cards.validation.CardValidationError
 import com.github.mpps.fsrs.model.State
 import io.vavr.control.Either
