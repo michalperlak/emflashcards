@@ -1,6 +1,7 @@
 package com.github.michalperlak.flashcards.cards
 
 import com.github.michalperlak.flashcards.cards.dto.NewCardDto
+import com.github.michalperlak.flashcards.cards.dto.RateCardDto
 import com.github.michalperlak.flashcards.cards.error.CardsError
 import com.github.michalperlak.flashcards.cards.model.Card
 import com.github.michalperlak.flashcards.cards.model.CardId
@@ -19,5 +20,9 @@ class CardsFacade(
 
     fun deleteCard(cardId: CardId): Either<CardsError, Unit> {
         TODO()
+    }
+
+    fun rateCard(cardId: CardId, rate: RateCardDto): Either<CardsError, Card> {
+        TODO("Not yet implemented")
     }
 }
