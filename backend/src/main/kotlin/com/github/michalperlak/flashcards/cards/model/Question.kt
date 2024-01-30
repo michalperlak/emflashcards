@@ -1,5 +1,6 @@
 package com.github.michalperlak.flashcards.cards.model
 
 data class Question(
-    val text: String
+    val text: String,
+    val category: Category
 )
