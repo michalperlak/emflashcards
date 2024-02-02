@@ -24,7 +24,7 @@ class CardsController(
     ): ResponseEntity<List<CardDto>> =
         ResponseEntity.ok(
             cardsFacade
-                .getForToday(states, limit)
+                .getForToday(userId, states, limit)
                 .map { CardDto.from(it) }
         )
 
