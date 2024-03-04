@@ -1,6 +1,6 @@
 package com.github.michalperlak.flashcards.cards.model
 
-import com.github.michalperlak.flashcards.notes.Note
+import com.github.michalperlak.flashcards.notes.model.Note
 import java.time.OffsetDateTime
 
 data class Card(
