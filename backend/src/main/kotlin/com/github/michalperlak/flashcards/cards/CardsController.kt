@@ -45,6 +45,16 @@ class CardsController(
             .map { toResponseEntity(it) }
             .getOrElseGet { ResponseEntity.badRequest().body(it) }
 
-    private fun toResponseEntity(it: Card): ResponseEntity<*> = ResponseEntity.ok(CardDto.from(it))
+    @DeleteMapping("/{cardId}")
+    fun deleteCard(@PathVariable cardId: CardId): ResponseEntity<*> =
+        cardsFacade
+            .deleteCard(cardId)
+            .map { toResponseEntity(cardId) }
+            .getOrElseGet { ResponseEntity.badRequest().body(it) }
+
+    private fun toResponseEntity(card: Card): ResponseEntity<*> =
+        ResponseEntity.ok(CardDto.from(card))
+
+    private fun toResponseEntity(cardId: CardId): ResponseEntity<*> = ResponseEntity.ok(cardId.id)
 
 }
