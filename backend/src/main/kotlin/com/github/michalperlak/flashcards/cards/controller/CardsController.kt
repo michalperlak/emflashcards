@@ -2,12 +2,15 @@ package com.github.michalperlak.flashcards.cards.controller
 
 import com.github.michalperlak.flashcards.cards.CardsFacade
 import com.github.michalperlak.flashcards.cards.dto.*
+import com.github.michalperlak.flashcards.cards.model.Author
 import com.github.michalperlak.flashcards.cards.model.Card
 import com.github.michalperlak.flashcards.cards.model.CardId
 import com.github.michalperlak.flashcards.cards.model.Note
 import com.github.michalperlak.flashcards.users.model.UserId
 import com.github.mpps.fsrs.model.State
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -55,9 +58,11 @@ class CardsController(
     @PostMapping("/{cardId}/notes")
     fun createNote(
         @PathVariable cardId: CardId,
-        @RequestBody newNote: NewNoteDto
+        @RequestBody newNote: NewNoteDto,
+        @AuthenticationPrincipal userDetails: UserDetails
     ): ResponseEntity<*> =
-        cardsFacade.createNote(cardId, newNote)
+        cardsFacade
+            .createNote(Author.fromUserDetails(userDetails), cardId, newNote)
             .map { toResponseEntity(it) }
             .getOrElseGet { ResponseEntity.badRequest().body(it) }
 

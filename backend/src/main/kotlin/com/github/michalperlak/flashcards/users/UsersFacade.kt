@@ -11,6 +11,6 @@ import org.springframework.stereotype.Component
 class UsersFacade(
     private val userManagementService: UserManagementService
 ) {
-
-    fun createUser(newUser: NewUserDto): Either<UsersError, User> = userManagementService.createUser(newUser)
+    fun createUser(newUser: NewUserDto): Either<UsersError, User> =
+        userManagementService.createUser(newUser)
 }

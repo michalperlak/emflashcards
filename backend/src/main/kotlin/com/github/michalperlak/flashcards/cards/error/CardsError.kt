@@ -1,4 +1,5 @@
 package com.github.michalperlak.flashcards.cards.error
 
-class CardsError {
-}
+data class CardsError(
+    val message: String
+)

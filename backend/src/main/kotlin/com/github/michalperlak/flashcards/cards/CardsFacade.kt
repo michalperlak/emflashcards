@@ -8,6 +8,7 @@ import com.github.michalperlak.flashcards.cards.dto.NewCardDto
 import com.github.michalperlak.flashcards.cards.dto.NewNoteDto
 import com.github.michalperlak.flashcards.cards.dto.RateCardDto
 import com.github.michalperlak.flashcards.cards.error.CardsError
+import com.github.michalperlak.flashcards.cards.model.Author
 import com.github.michalperlak.flashcards.cards.model.Card
 import com.github.michalperlak.flashcards.cards.model.CardId
 import com.github.michalperlak.flashcards.cards.model.Note
@@ -36,6 +37,6 @@ class CardsFacade(
     fun rateCard(cardId: CardId, rate: RateCardDto): Either<CardsError, Card> =
         cardsRatingService.rateCard(cardId, rate)
 
-    fun createNote(cardId: CardId, newNote: NewNoteDto): Either<CardsError, Note> =
-        notesService.createNote(cardId, newNote)
+    fun createNote(author: Author, cardId: CardId, newNote: NewNoteDto): Either<CardsError, Note> =
+        notesService.createNote(author, cardId, newNote)
 }
