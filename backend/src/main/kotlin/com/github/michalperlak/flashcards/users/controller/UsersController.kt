@@ -1,5 +1,6 @@
-package com.github.michalperlak.flashcards.users
+package com.github.michalperlak.flashcards.users.controller
 
+import com.github.michalperlak.flashcards.users.UsersFacade
 import com.github.michalperlak.flashcards.users.dto.NewUserDto
 import com.github.michalperlak.flashcards.users.model.User
 import com.github.michalperlak.flashcards.users.model.UserDto

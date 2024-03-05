@@ -1,5 +1,6 @@
-package com.github.michalperlak.flashcards.cards
+package com.github.michalperlak.flashcards.cards.application
 
+import com.github.michalperlak.flashcards.cards.repository.CardsRepository
 import com.github.michalperlak.flashcards.cards.dto.NewCardDto
 import com.github.michalperlak.flashcards.cards.error.CardsError
 import com.github.michalperlak.flashcards.cards.model.Card

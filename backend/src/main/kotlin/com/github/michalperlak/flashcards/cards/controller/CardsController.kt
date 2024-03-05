@@ -1,10 +1,10 @@
-package com.github.michalperlak.flashcards.cards
+package com.github.michalperlak.flashcards.cards.controller
 
-import com.github.michalperlak.flashcards.cards.dto.CardDto
-import com.github.michalperlak.flashcards.cards.dto.NewCardDto
-import com.github.michalperlak.flashcards.cards.dto.RateCardDto
+import com.github.michalperlak.flashcards.cards.CardsFacade
+import com.github.michalperlak.flashcards.cards.dto.*
 import com.github.michalperlak.flashcards.cards.model.Card
 import com.github.michalperlak.flashcards.cards.model.CardId
+import com.github.michalperlak.flashcards.cards.model.Note
 import com.github.michalperlak.flashcards.users.model.UserId
 import com.github.mpps.fsrs.model.State
 import org.springframework.http.ResponseEntity
@@ -51,6 +51,18 @@ class CardsController(
             .deleteCard(cardId)
             .map { toResponseEntity(cardId) }
             .getOrElseGet { ResponseEntity.badRequest().body(it) }
+
+    @PostMapping("/{cardId}/notes")
+    fun createNote(
+        @PathVariable cardId: CardId,
+        @RequestBody newNote: NewNoteDto
+    ): ResponseEntity<*> =
+        cardsFacade.createNote(cardId, newNote)
+            .map { toResponseEntity(it) }
+            .getOrElseGet { ResponseEntity.badRequest().body(it) }
+
+    private fun toResponseEntity(note: Note): ResponseEntity<*> =
+        ResponseEntity.ok(NoteDto.from(note))
 
     private fun toResponseEntity(card: Card): ResponseEntity<*> =
         ResponseEntity.ok(CardDto.from(card))

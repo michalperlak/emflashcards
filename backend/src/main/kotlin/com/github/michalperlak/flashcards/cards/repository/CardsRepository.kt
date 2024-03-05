@@ -1,4 +1,4 @@
-package com.github.michalperlak.flashcards.cards
+package com.github.michalperlak.flashcards.cards.repository
 
 import com.github.michalperlak.flashcards.cards.model.Card
 import com.github.michalperlak.flashcards.cards.model.CardId

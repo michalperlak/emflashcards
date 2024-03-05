@@ -1,4 +1,4 @@
-package com.github.michalperlak.flashcards.notes.model
+package com.github.michalperlak.flashcards.cards.model
 
 import java.time.OffsetDateTime
 

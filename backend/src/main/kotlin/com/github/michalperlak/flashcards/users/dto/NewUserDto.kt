@@ -1,4 +1,5 @@
 package com.github.michalperlak.flashcards.users.dto
 
-class NewUserDto {
-}
+data class NewUserDto(
+    val name: String
+)

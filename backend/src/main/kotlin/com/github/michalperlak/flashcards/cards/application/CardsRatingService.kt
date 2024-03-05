@@ -1,4 +1,4 @@
-package com.github.michalperlak.flashcards.cards
+package com.github.michalperlak.flashcards.cards.application
 
 import com.github.michalperlak.flashcards.cards.dto.RateCardDto
 import com.github.michalperlak.flashcards.cards.error.CardsError
