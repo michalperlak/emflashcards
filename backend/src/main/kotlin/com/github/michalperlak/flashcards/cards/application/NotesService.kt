@@ -8,7 +8,9 @@ import com.github.michalperlak.flashcards.cards.model.Note
 import com.github.michalperlak.flashcards.cards.repository.CardsRepository
 import com.github.michalperlak.flashcards.time.TimeService
 import io.vavr.control.Either
+import org.springframework.stereotype.Service
 
+@Service
 class NotesService(
     private val timeService: TimeService,
     private val cardsRepository: CardsRepository
