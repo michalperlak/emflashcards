@@ -24,6 +24,7 @@ repositories {
 extra["springModulithVersion"] = "1.1.2"
 extra["fsrsVersion"] = "1.0-SNAPSHOT"
 extra["vavrVersion"] = "0.10.2"
+extra["jjwtVersion"] = "0.12.5"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
@@ -33,6 +34,10 @@ dependencies {
     implementation("org.springframework.modulith:spring-modulith-starter-core")
     implementation("com.github.mpps:fsrs-kt:${property("fsrsVersion")}")
     implementation("io.vavr:vavr-kotlin:${property("vavrVersion")}")
+    implementation("io.jsonwebtoken:jjwt-api:${property("jjwtVersion")}")
+    implementation("io.jsonwebtoken:jjwt-impl:${property("jjwtVersion")}")
+    implementation("io.jsonwebtoken:jjwt-jackson:${property("jjwtVersion")}")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.modulith:spring-modulith-starter-test")
     testImplementation("org.springframework.security:spring-security-test")

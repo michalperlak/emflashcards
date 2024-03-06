@@ -5,11 +5,12 @@ import org.springframework.security.core.userdetails.UserDetails
 
 data class User(
     val id: UserId,
-    val name: String
+    val name: String,
+    val passwordHash: String
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
 
-    override fun getPassword(): String = ""
+    override fun getPassword(): String = passwordHash
 
     override fun getUsername(): String = name
 

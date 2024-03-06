@@ -34,7 +34,7 @@ class CardsManagementService(
     private fun createNewCard(newCard: NewCardDto, now: OffsetDateTime): Card =
         Card(
             id = CardId.generate(),
-            category = newCard.category,
+            category = Category(newCard.category.trim()),
             question = Question(newCard.question),
             answer = Answer(newCard.answer),
             notes = listOf(),

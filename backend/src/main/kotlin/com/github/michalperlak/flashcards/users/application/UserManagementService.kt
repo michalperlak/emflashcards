@@ -8,11 +8,13 @@ import com.github.michalperlak.flashcards.users.repository.UsersRepository
 import io.vavr.control.Either
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class UserManagementService(
-    private val usersRepository: UsersRepository
+    private val usersRepository: UsersRepository,
+    private val passwordEncoder: PasswordEncoder
 ) : UserDetailsService {
     fun createUser(newUser: NewUserDto): Either<UsersError, User> =
         usersRepository
@@ -31,7 +33,8 @@ class UserManagementService(
     private fun createNewUser(newUser: NewUserDto): Either<UsersError, User> {
         val user = User(
             id = UserId.generate(),
-            name = newUser.name
+            name = newUser.name,
+            passwordHash = passwordEncoder.encode(newUser.password)
         )
         return Either.right(
             usersRepository.addUser(user)

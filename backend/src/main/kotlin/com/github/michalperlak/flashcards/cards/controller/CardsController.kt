@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 @RestController
 @RequestMapping("/api/cards")
@@ -21,7 +22,10 @@ class CardsController(
 
     @GetMapping
     fun getCardsForToday(
-        @RequestParam(name = "states") states: Set<State>,
+        @RequestParam(
+            name = "states",
+            required = false
+        ) states: Set<State> = EnumSet.allOf(State::class.java),
         @RequestParam(name = "limit") limit: Int = Int.MAX_VALUE,
         @AuthenticationPrincipal userDetails: UserDetails
     ): ResponseEntity<List<CardDto>> =
