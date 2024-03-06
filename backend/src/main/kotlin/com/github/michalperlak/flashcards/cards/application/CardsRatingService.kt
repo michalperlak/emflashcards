@@ -4,9 +4,10 @@ import com.github.michalperlak.flashcards.cards.dto.RateCardDto
 import com.github.michalperlak.flashcards.cards.error.CardsError
 import com.github.michalperlak.flashcards.cards.model.Card
 import com.github.michalperlak.flashcards.cards.model.CardId
-import com.github.michalperlak.flashcards.cards.model.LearningState
+import com.github.michalperlak.flashcards.cards.model.UserLearningState
 import com.github.michalperlak.flashcards.cards.repository.CardsRepository
 import com.github.michalperlak.flashcards.time.TimeService
+import com.github.michalperlak.flashcards.users.model.UserId
 import com.github.mpps.fsrs.algorithm.FSRS
 import com.github.mpps.fsrs.model.Rating
 import io.vavr.control.Either
@@ -15,55 +16,50 @@ import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 import com.github.mpps.fsrs.model.Card as FsrsCard
 
-fun main() {
-    val fsrs = FSRS()
-    val now = OffsetDateTime.now()
-    val fsrsCard = FsrsCard.createEmpty(now.minusDays(2))
-    val log = fsrs.repeat(fsrsCard, now)
-    println(log[Rating.Hard])
-    println(log[Rating.Good])
-    println(log[Rating.Again])
-    println(log[Rating.Easy])
-}
-
 @Service
 class CardsRatingService(
     private val timeService: TimeService,
     private val cardsRepository: CardsRepository
 ) {
-    fun rateCard(cardId: CardId, rate: RateCardDto): Either<CardsError, Card> =
+    fun rateCard(cardId: CardId, userId: UserId, rate: RateCardDto): Either<CardsError, Card> =
         cardsRepository
             .getCard(cardId)
             .toEither { CardsError("Card for id: $cardId not found!") }
-            .map { updateRate(it, rate.rating) }
+            .map { updateRate(it, userId, rate.rating) }
 
-    private fun updateRate(card: Card, rating: Rating): Card {
+    private fun updateRate(card: Card, userId: UserId, rating: Rating): Card {
         val fsrs = FSRS()
-        val fsrsCard = toFsrsCard(card)
+        val userLearningState = card.learningState[userId]
+        val fsrsCard = toFsrsCard(userLearningState)
         val now = timeService.getCurrentTimestamp()
         val log = fsrs.repeat(fsrsCard, now)
         val fsrsLearningState =
             log[rating]?.card ?: throw IllegalStateException("Rating not found in logs!")
         return cardsRepository.save(
-            card.copy(learningState = toLearningState(fsrsLearningState, now))
+            card.copy(
+                learningState = card.learningState.copy(
+                    usersLearningState = card.learningState.usersLearningState +
+                            mapOf(userId to toLearningState(fsrsLearningState, now))
+                )
+            )
         )
     }
 
-    private fun toFsrsCard(card: Card): FsrsCard =
+    private fun toFsrsCard(learningState: UserLearningState): FsrsCard =
         FsrsCard(
-            due = card.learningState.due,
-            elapsedDays = card.learningState.elapsedDays,
-            scheduledDays = card.learningState.scheduledDays,
-            reps = card.learningState.reps,
-            lapses = card.learningState.lapses,
-            state = card.learningState.state,
-            stability = card.learningState.stability,
-            difficulty = card.learningState.difficulty,
-            lastReview = card.learningState.lastReview.orNull
+            due = learningState.due,
+            elapsedDays = learningState.elapsedDays,
+            scheduledDays = learningState.scheduledDays,
+            reps = learningState.reps,
+            lapses = learningState.lapses,
+            state = learningState.state,
+            stability = learningState.stability,
+            difficulty = learningState.difficulty,
+            lastReview = learningState.lastReview.orNull
         )
 
-    private fun toLearningState(fsrsCard: FsrsCard, now: OffsetDateTime): LearningState =
-        LearningState(
+    private fun toLearningState(fsrsCard: FsrsCard, now: OffsetDateTime): UserLearningState =
+        UserLearningState(
             due = fsrsCard.due,
             elapsedDays = fsrsCard.elapsedDays,
             scheduledDays = fsrsCard.scheduledDays,

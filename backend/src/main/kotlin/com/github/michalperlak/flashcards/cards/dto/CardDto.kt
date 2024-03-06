@@ -9,7 +9,6 @@ data class CardDto(
     val answer: String,
     val notes: List<NoteDto>,
     val created: OffsetDateTime,
-    val learningState: LearningStateDto
 ) {
 
     companion object {
@@ -18,8 +17,7 @@ data class CardDto(
             question = card.question.text,
             answer = card.answer.text,
             notes = card.notes.map { NoteDto.from(it) },
-            created = card.created,
-            learningState = LearningStateDto.from(card.learningState)
+            created = card.created
         )
     }
 }

@@ -5,6 +5,7 @@ import com.github.michalperlak.flashcards.cards.error.CardsError
 import com.github.michalperlak.flashcards.cards.model.*
 import com.github.michalperlak.flashcards.cards.repository.CardsRepository
 import com.github.michalperlak.flashcards.time.TimeService
+import com.github.michalperlak.flashcards.users.UsersFacade
 import io.vavr.control.Either
 import io.vavr.control.Option
 import org.springframework.stereotype.Service
@@ -14,6 +15,7 @@ import com.github.mpps.fsrs.model.Card as FsrsCard
 @Service
 class CardsManagementService(
     private val timeService: TimeService,
+    private val usersFacade: UsersFacade,
     private val cardsRepository: CardsRepository
 ) {
     fun createCard(newCard: NewCardDto): Either<CardsError, Card> =
@@ -40,11 +42,17 @@ class CardsManagementService(
             learningState = newLearningState(now)
         )
 
-    private fun newLearningState(now: OffsetDateTime): LearningState =
-        toLearningState(FsrsCard.createEmpty(now))
+    private fun newLearningState(now: OffsetDateTime): LearningState {
+        val startLearningState = toLearningState(FsrsCard.createEmpty(now))
+        val learningStates = usersFacade
+            .getAll()
+            .map { it to startLearningState }
+            .toMap()
+        return LearningState(learningStates)
+    }
 
-    private fun toLearningState(fsrsCard: FsrsCard): LearningState =
-        LearningState(
+    private fun toLearningState(fsrsCard: FsrsCard): UserLearningState =
+        UserLearningState(
             due = fsrsCard.due,
             elapsedDays = fsrsCard.elapsedDays,
             scheduledDays = fsrsCard.scheduledDays,

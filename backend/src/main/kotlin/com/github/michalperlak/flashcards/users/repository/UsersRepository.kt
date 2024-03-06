@@ -20,4 +20,5 @@ class UsersRepository(
         )
 
     fun addUser(user: User): User = user.apply { users[id] = this }
+    fun getAll(): List<User> = users.values.toList()
 }

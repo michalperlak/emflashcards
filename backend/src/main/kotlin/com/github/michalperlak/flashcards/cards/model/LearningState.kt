@@ -1,17 +1,10 @@
 package com.github.michalperlak.flashcards.cards.model
 
-import com.github.mpps.fsrs.model.State
-import io.vavr.control.Option
-import java.time.OffsetDateTime
+import com.github.michalperlak.flashcards.users.model.UserId
 
 data class LearningState(
-    val due: OffsetDateTime,
-    val elapsedDays: Long,
-    val scheduledDays: Long,
-    val reps: Long,
-    val lapses: Long,
-    val state: State,
-    val stability: Double,
-    val difficulty: Double,
-    val lastReview: Option<OffsetDateTime>
-)
+    val usersLearningState: Map<UserId, UserLearningState>
+) {
+    operator fun get(userId: UserId): UserLearningState = usersLearningState[userId]
+        ?: throw IllegalArgumentException("Learning state for user not found!")
+}

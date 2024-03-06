@@ -32,4 +32,8 @@ class UserManagementService(
         Either.left(
             UsersError("User with username: ${user.name} already exists!")
         )
+
+    fun getAll(): List<UserId> = usersRepository
+        .getAll()
+        .map { it.id }
 }

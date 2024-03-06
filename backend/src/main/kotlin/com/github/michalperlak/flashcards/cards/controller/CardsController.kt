@@ -6,6 +6,7 @@ import com.github.michalperlak.flashcards.cards.model.Author
 import com.github.michalperlak.flashcards.cards.model.Card
 import com.github.michalperlak.flashcards.cards.model.CardId
 import com.github.michalperlak.flashcards.cards.model.Note
+import com.github.michalperlak.flashcards.users.model.User
 import com.github.michalperlak.flashcards.users.model.UserId
 import com.github.mpps.fsrs.model.State
 import org.springframework.http.ResponseEntity
@@ -34,10 +35,11 @@ class CardsController(
     @PutMapping("/{cardId}")
     fun rateCard(
         @PathVariable cardId: CardId,
-        @RequestBody rate: RateCardDto
+        @RequestBody rate: RateCardDto,
+        @AuthenticationPrincipal userDetails: UserDetails
     ): ResponseEntity<*> =
         cardsFacade
-            .rateCard(cardId, rate)
+            .rateCard(cardId, (userDetails as User).id, rate)
             .map { toResponseEntity(it) }
             .getOrElseGet { ResponseEntity.badRequest().body(it) }
 
