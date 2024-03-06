@@ -7,7 +7,6 @@ import com.github.michalperlak.flashcards.cards.model.Card
 import com.github.michalperlak.flashcards.cards.model.CardId
 import com.github.michalperlak.flashcards.cards.model.Note
 import com.github.michalperlak.flashcards.users.model.User
-import com.github.michalperlak.flashcards.users.model.UserId
 import com.github.mpps.fsrs.model.State
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -22,13 +21,13 @@ class CardsController(
 
     @GetMapping
     fun getCardsForToday(
-        @RequestParam(name = "userId") userId: UserId,
         @RequestParam(name = "states") states: Set<State>,
-        @RequestParam(name = "limit") limit: Int = Int.MAX_VALUE
+        @RequestParam(name = "limit") limit: Int = Int.MAX_VALUE,
+        @AuthenticationPrincipal userDetails: UserDetails
     ): ResponseEntity<List<CardDto>> =
         ResponseEntity.ok(
             cardsFacade
-                .getForToday(userId, states, limit)
+                .getForToday(userId(userDetails), states, limit)
                 .map { CardDto.from(it) }
         )
 
@@ -39,7 +38,7 @@ class CardsController(
         @AuthenticationPrincipal userDetails: UserDetails
     ): ResponseEntity<*> =
         cardsFacade
-            .rateCard(cardId, (userDetails as User).id, rate)
+            .rateCard(cardId, userId(userDetails), rate)
             .map { toResponseEntity(it) }
             .getOrElseGet { ResponseEntity.badRequest().body(it) }
 
@@ -67,6 +66,9 @@ class CardsController(
             .createNote(Author.fromUserDetails(userDetails), cardId, newNote)
             .map { toResponseEntity(it) }
             .getOrElseGet { ResponseEntity.badRequest().body(it) }
+
+    private fun userId(userDetails: UserDetails) =
+        (userDetails as User).id
 
     private fun toResponseEntity(note: Note): ResponseEntity<*> =
         ResponseEntity.ok(NoteDto.from(note))
