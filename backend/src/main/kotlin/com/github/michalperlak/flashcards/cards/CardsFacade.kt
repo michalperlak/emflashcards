@@ -31,7 +31,7 @@ class CardsFacade(
     fun createCard(newCard: NewCardDto): Either<CardsError, Card> =
         cardsManagementService.createCard(newCard)
 
-    fun deleteCard(cardId: CardId): Either<CardsError, Unit> =
+    fun deleteCard(cardId: CardId): Either<CardsError, Card> =
         cardsManagementService.deleteCard(cardId)
 
     fun rateCard(cardId: CardId, rate: RateCardDto): Either<CardsError, Card> =

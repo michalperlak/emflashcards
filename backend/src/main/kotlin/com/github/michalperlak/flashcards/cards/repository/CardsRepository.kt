@@ -13,4 +13,5 @@ class CardsRepository {
 
     fun getCard(cardId: CardId): Option<Card> = Option.of(cards[cardId])
     fun save(card: Card) = card.apply { cards[id] = this }
+    fun delete(card: Card): Card = card.apply { cards.remove(card.id) }
 }

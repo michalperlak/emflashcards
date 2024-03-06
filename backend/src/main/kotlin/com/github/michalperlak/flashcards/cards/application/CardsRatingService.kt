@@ -15,6 +15,17 @@ import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 import com.github.mpps.fsrs.model.Card as FsrsCard
 
+fun main() {
+    val fsrs = FSRS()
+    val now = OffsetDateTime.now()
+    val fsrsCard = FsrsCard.createEmpty(now.minusDays(2))
+    val log = fsrs.repeat(fsrsCard, now)
+    println(log[Rating.Hard])
+    println(log[Rating.Good])
+    println(log[Rating.Again])
+    println(log[Rating.Easy])
+}
+
 @Service
 class CardsRatingService(
     private val timeService: TimeService,
