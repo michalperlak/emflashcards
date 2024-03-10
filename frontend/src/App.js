@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useContext} from 'react';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import './App.css';
+import {AppContext} from "./context/app-context";
+import {AppContextProvider} from "./context/app-context-provider";
+import LoginPage from "./pages/login/login-page";
+import ReviewPage from "./pages/review/review-page";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const AppRouting = () => {
+    const {user} = useContext(AppContext);
+    console.log(JSON.stringify(user));
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<LoginPage/>}/>)
+                <Route path="/review" element={<ReviewPage/>}/>
+            </Routes>
+        </BrowserRouter>
+    );
 }
+
+const App = () => {
+    return (
+        <AppContextProvider>
+            <AppRouting/>
+        </AppContextProvider>
+    );
+}
+
 
 export default App;
