@@ -8,11 +8,11 @@ import ReviewPage from "./pages/review/review-page";
 
 const AppRouting = () => {
     const {user} = useContext(AppContext);
-    console.log(JSON.stringify(user));
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<LoginPage/>}/>)
+                {!user && (<Route path="/" element={<LoginPage/>}/>) }
+                {user && (<Route path="/" element={<ReviewPage/>}/>)}
                 <Route path="/review" element={<ReviewPage/>}/>
             </Routes>
         </BrowserRouter>

@@ -1,21 +1,18 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {AppContext} from "../../context/app-context";
 import './login.css';
 
 const Login = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const {updateState} = useContext(AppContext);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
     const handleLogin = () => {
         setIsLoggedIn(true);
-        const user = {id: 'abc', username: 'Test', token: '123abc'};
-        updateState({user})
+        const newUser = {id: 'abc', username: 'Test', token: '123abc'};
+        updateState({user: newUser})
         navigate("/review");
     };
-    if (isLoggedIn) {
-        navigate("/review");
-    }
 
     return (
         <div className="login">
