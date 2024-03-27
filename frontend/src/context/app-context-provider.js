@@ -1,5 +1,5 @@
+import {get, set} from 'idb-keyval';
 import React, {useEffect, useState} from "react";
-import { set, get } from 'idb-keyval';
 import {AppContext} from "./app-context";
 
 const getInitialState = async () => {
@@ -11,18 +11,17 @@ const getInitialState = async () => {
 
 const initialState = await getInitialState();
 
-const saveState  = async (state) => {
-    await set('context', state);
-    console.log("Saving state: " + JSON.stringify(state));
-} 
-
 export const AppContextProvider = (props) => {
     const [state, setState] = useState(initialState);
     const updateState = async (newState) => {
         setState({...state, ...newState});
     };
-    useEffect(() =>  {
-        saveState({...state});
+    useEffect(() => {
+        const saveState = async (state) => {
+            await set('context', state);
+        }
+        saveState({...state})
+            .catch(console.error);
     }, [state]);
 
     return (

@@ -1,14 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './card.css';
 
-const Card = ({question, answer, notes}) => {
-    const [showAnswer, setShowAnswer] = useState(false);
-
+const Card = ({question}) => {
     return (
         <div className="card">
             <p>{question}</p>
-            {!showAnswer && (<button onClick={() => setShowAnswer(true)}>Show answer</button>)}
-            {showAnswer && (<p>{answer}</p>)}
         </div>
     );
 }
