@@ -1,0 +1,28 @@
+.card-answer {
+    height: 100%;
+    margin: auto;
+}
+
+.click-disabled {
+    cursor: not-allowed;
+}
+
+.mt-20 {
+    margin-top: 20%;
+}
+
+.mb-20 {
+    margin-bottom: 20%;
+}
+
+.ml-10 {
+    margin-left: 10%;
+}
+
+.mr-10 {
+    margin-right: 10%;
+}
+
+.w-95 {
+    width: 95%;
+}

@@ -9,7 +9,7 @@ const Login = () => {
     const navigate = useNavigate();
     const handleLogin = () => {
         setIsLoggedIn(true);
-        const newUser = {id: 'abc', username: 'Test', token: '123abc'};
+        const newUser = {id: 'abc', username: 'Test', token: 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNaWNoYcWCIiwiZXhwIjo0ODY1MzM3NDE5fQ.WYRluJnx579C3C6P-Gb3yXakDTNCeYvVgWWFoiQhE4U'};
         updateState({user: newUser})
         navigate("/review");
     };

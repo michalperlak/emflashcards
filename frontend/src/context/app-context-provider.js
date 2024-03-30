@@ -3,9 +3,7 @@ import React, {useEffect, useState} from "react";
 import {AppContext} from "./app-context";
 
 const getInitialState = async () => {
-    console.log("Loading state");
     const state = await get('context') || {};
-    console.log("Loaded state: " + state);
     return state;
 };
 
