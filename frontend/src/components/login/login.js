@@ -1,33 +1,60 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import {logIn} from "../../application/auth";
 import {AppContext} from "../../context/app-context";
 import './login.css';
 
 const Login = () => {
     const {updateState} = useContext(AppContext);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const navigate = useNavigate();
+
     const handleLogin = () => {
-        setIsLoggedIn(true);
-        const newUser = {id: 'abc', username: 'Test', token: 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNaWNoYcWCIiwiZXhwIjo0ODY1MzM3NDE5fQ.WYRluJnx579C3C6P-Gb3yXakDTNCeYvVgWWFoiQhE4U'};
-        updateState({user: newUser})
-        navigate("/review");
+        logIn(username, password)
+            .then(result => {
+                alert(result);
+                updateState({
+                    user: {
+                        username: username,
+                        token: result.value
+                    }
+                });
+                navigate("/review");
+            });
     };
 
     return (
         <div className="login">
             <h1>Log In</h1>
-            <form>
-                <div>
-                    <label title="username">Username</label>
-                    <input type="text"/>
-                </div>
-                <div>
-                    <label title="password">Password</label>
-                    <input type="password"/>
-                </div>
-                <button onClick={handleLogin}>Log In</button>
-            </form>
+            <div className="field">
+                <p className="control has-icons-left has-icons-right">
+                    <input className="input" type="text" placeholder="Username" value={username}
+                           onInput={event => setUsername(event.target.value)}/>
+                    <span className="icon is-small is-left">
+                            <i className="fas fa-user"></i>
+                        </span>
+                    <span className="icon is-small is-right">
+                            <i className="fas fa-check"></i>
+                        </span>
+                </p>
+            </div>
+            <div className="field">
+                <p className="control has-icons-left">
+                    <input className="input" type="password" placeholder="Password" value={password}
+                           onInput={event => setPassword(event.target.value)}/>
+                    <span className="icon is-small is-left">
+                            <i className="fas fa-lock"></i>
+                        </span>
+                </p>
+            </div>
+            <div className="field">
+                <p className="control">
+                    <button className="button is-success" onClick={handleLogin}>
+                        Login
+                    </button>
+                </p>
+            </div>
         </div>
     );
 }

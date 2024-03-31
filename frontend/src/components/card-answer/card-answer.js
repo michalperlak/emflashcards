@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import './card-answer.css';
+import {rateCard} from "../../application/cards";
+import {AppContext} from "../../context/app-context";
 
 const RATE_AGAIN = 1;
 const RATE_HARD = 2;
@@ -8,6 +10,7 @@ const RATE_EASY = 4;
 
 
 const CardAnswer = ({answer, cardId, session}) => {
+    const {user, updateState} = useContext(AppContext);
     const [isDone, setIsDone] = useState(session.done.includes(cardId));
     const [rate, setRate] = useState(session.rates[cardId] || -1);
 
@@ -17,10 +20,13 @@ const CardAnswer = ({answer, cardId, session}) => {
         setRate(newRate);
         setIsDone(true);
 
-        session.done.push(cardId);
-        session.rates[cardId] = newRate;
-
-        alert("Your rate: " + newRate);
+        rateCard(user, cardId, newRate)
+            .then(() => {
+                session.done.push(cardId);
+                session.rates[cardId] = newRate;
+                updateState({activeSession: session});
+                alert("Your rate: " + newRate);
+            })
     };
 
     return (

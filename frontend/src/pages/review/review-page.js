@@ -8,24 +8,26 @@ import Card from "../../components/card/card";
 import {AppContext} from "../../context/app-context";
 import './review.css';
 
+const getCardsForReview = async (user, learningSession) => {
+    const data = await getCards(user);
+    learningSession.cards = data;
+};
+
 const ReviewPage = () => {
     const {user, activeSession, updateState} = useContext(AppContext);
-    const [learningSession, _] = useState(activeSession || {
+    const [learningSession] = useState(activeSession || {
         cards: [], done: [], rates: {}, finished: false
     });
-    const getCardsForReview = async () => {
-      const data = await getCards(user);
-      learningSession.cards = data;
-    };
+
 
     useEffect(() => {
         if (learningSession.cards && learningSession.cards.length > 0) {
             return;
         }
-        getCardsForReview()
+        getCardsForReview(user, learningSession)
             .catch(console.error)
             .then(() => updateState({activeSession: learningSession}));
-    }, [])
+    }, [user, learningSession, updateState])
 
     return (
         <Container>

@@ -1,6 +1,8 @@
 import React, {useContext} from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import './App.css';
+import 'bulma/css/bulma.min.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 import {AppContext} from "./context/app-context";
 import {AppContextProvider} from "./context/app-context-provider";
 import LoginPage from "./pages/login/login-page";

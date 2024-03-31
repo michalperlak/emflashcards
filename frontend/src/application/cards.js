@@ -9,6 +9,6 @@ export const getCards = async (user) => {
 
 export const rateCard = async (user, cardId, rate) => {
     const response = await axios.put(`${CARDS_PATH}/${cardId}`,
-        {rating: rate}, {headers: {"Authorization": `Bearer ${user.token}`}});
+        {rating: rate - 1}, {headers: {"Authorization": `Bearer ${user.token}`}});
     return response.data;
 };
