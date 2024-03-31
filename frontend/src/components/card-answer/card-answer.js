@@ -26,6 +26,7 @@ const CardAnswer = ({answer, cardId, session}) => {
         rateCard(user, cardId, newRate)
             .then(() => {
                 session.done.push(cardId);
+                session.finished = session.finished || (session.done.length === session.cards.length) ? new Date() : null;
                 session.rates[cardId] = newRate;
                 updateState({activeSession: session});
             })

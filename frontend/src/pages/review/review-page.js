@@ -5,6 +5,7 @@ import {FlashcardArray} from "react-quizlet-flashcard";
 import {getCards} from "../../application/cards";
 import CardAnswer from "../../components/card-answer/card-answer";
 import Card from "../../components/card/card";
+import SessionSummary from "../../components/session-summary/session-summary";
 import {AppContext} from "../../context/app-context";
 import './review.css';
 
@@ -13,11 +14,18 @@ const getCardsForReview = async (user, learningSession) => {
     learningSession.cards = data;
 };
 
+const newSession = (activeSession) => {
+    if (!activeSession || activeSession.finished) {
+        return {
+            cards: [], done: [], rates: {}, finished: null, started: new Date()
+        };
+    }
+    return activeSession;
+}
+
 const ReviewPage = () => {
     const {user, activeSession, updateState} = useContext(AppContext);
-    const [learningSession] = useState(activeSession || {
-        cards: [], done: [], rates: {}, finished: false
-    });
+    const [learningSession] = useState(newSession(activeSession));
 
     useEffect(() => {
         if (learningSession.cards && learningSession.cards.length > 0) {
@@ -31,7 +39,7 @@ const ReviewPage = () => {
     return (
         <Container>
             <div className="flashcards-wrapper">
-                { learningSession.cards &&
+                { learningSession.cards && !learningSession.finished &&
                     <FlashcardArray
                         cards={learningSession.cards.map(card => (
                             {
@@ -46,6 +54,9 @@ const ReviewPage = () => {
                     />
                 }
             </div>
+            {
+                learningSession.finished && <SessionSummary session={learningSession} />
+            }
         </Container>
     );
 }
