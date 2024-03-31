@@ -1,8 +1,5 @@
-#users:
-#  path: /emdata/users.json
-
 users:
-  path: C:/emdata/users.json
+  path: /emdata/users.json
 
 org:
   eclipse:
