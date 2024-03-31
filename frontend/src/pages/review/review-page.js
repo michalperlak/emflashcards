@@ -19,7 +19,6 @@ const ReviewPage = () => {
         cards: [], done: [], rates: {}, finished: false
     });
 
-
     useEffect(() => {
         if (learningSession.cards && learningSession.cards.length > 0) {
             return;
