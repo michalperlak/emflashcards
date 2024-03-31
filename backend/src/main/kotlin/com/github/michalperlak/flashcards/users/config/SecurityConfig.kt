@@ -47,10 +47,14 @@ class SecurityConfig(
             .cors { it.configurationSource(corsConfigurationSource()) }
             .authorizeHttpRequests {
                 it
-                    .requestMatchers("/api/auth/login")
+                    .requestMatchers("/**")
                     .permitAll()
-                    .anyRequest()
-                    .authenticated()
+
+//                it
+//                    .requestMatchers("/api/auth/login", "/store-console/**")
+//                    .permitAll()
+//                    .anyRequest()
+//                    .authenticated()
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .addFilterBefore(

@@ -5,13 +5,13 @@ import io.vavr.control.Option
 import java.time.OffsetDateTime
 
 data class UserLearningState(
-    val due: OffsetDateTime,
-    val elapsedDays: Long,
-    val scheduledDays: Long,
-    val reps: Long,
-    val lapses: Long,
-    val state: State,
-    val stability: Double,
-    val difficulty: Double,
-    val lastReview: Option<OffsetDateTime>
+    var due: OffsetDateTime,
+    var elapsedDays: Long,
+    var scheduledDays: Long,
+    var reps: Long,
+    var lapses: Long,
+    var state: State,
+    var stability: Double,
+    var difficulty: Double,
+    var lastReview: Option<OffsetDateTime>
 )

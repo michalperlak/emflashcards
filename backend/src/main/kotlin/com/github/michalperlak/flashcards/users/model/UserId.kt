@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*
 
 data class UserId @JsonCreator constructor(
-    @JsonProperty("id") private val id: String
+    @JsonProperty("id") private var id: String
 ) {
     companion object {
         fun generate(): UserId = UserId(UUID.randomUUID().toString())

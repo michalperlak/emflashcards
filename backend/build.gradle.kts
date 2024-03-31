@@ -25,6 +25,7 @@ extra["springModulithVersion"] = "1.1.2"
 extra["fsrsVersion"] = "1.0-SNAPSHOT"
 extra["vavrVersion"] = "0.10.2"
 extra["jjwtVersion"] = "0.12.5"
+extra["eclipseStoreVersion"] = "1.3.1"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
@@ -37,6 +38,8 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:${property("jjwtVersion")}")
     implementation("io.jsonwebtoken:jjwt-impl:${property("jjwtVersion")}")
     implementation("io.jsonwebtoken:jjwt-jackson:${property("jjwtVersion")}")
+    implementation("org.eclipse.store:integrations-spring-boot3:${property("eclipseStoreVersion")}")
+    implementation("org.eclipse.store:integrations-spring-boot3-console:${property("eclipseStoreVersion")}")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.modulith:spring-modulith-starter-test")
