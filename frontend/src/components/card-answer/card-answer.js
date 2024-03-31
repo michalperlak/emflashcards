@@ -17,24 +17,27 @@ const CardAnswer = ({answer, cardId, session}) => {
     const handleRate = (clickEvent, newRate) => {
         clickEvent.stopPropagation();
         clickEvent.nativeEvent.stopImmediatePropagation();
+        if (isDone) {
+            return;
+        }
+
         setRate(newRate);
         setIsDone(true);
-
         rateCard(user, cardId, newRate)
             .then(() => {
                 session.done.push(cardId);
                 session.rates[cardId] = newRate;
                 updateState({activeSession: session});
-                alert("Your rate: " + newRate);
             })
     };
 
     return (
         <div className="card-answer fixed-grid has-4-cols">
-            <div className="grid mt-20 has-text-centered ml-10 mr-10">
+            <div className="grid mt-40 has-text-centered ml-10 mr-10">
                 <div className="cell is-col-span-4 mb-20">
                     <p>{answer}</p>
                 </div>
+                <div className="cell is-col-span-4 mt-10"/>
                 <div className="cell">
                     <button
                         className={`button w-95 ${isDone && rate !== RATE_AGAIN ? "is-light" : "is-danger"} ${isDone ? "" : "is-light"} ${isDone ? "click-disabled" : ""}`}

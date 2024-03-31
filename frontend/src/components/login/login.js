@@ -25,8 +25,8 @@ const Login = () => {
 
     return (
         <div className="login">
-            <h1>Log In</h1>
-            <div className="field">
+            <h1 className="subtitle is-3 login-text">Sign In</h1>
+            <div className="field login-input mt-10">
                 <p className="control has-icons-left has-icons-right">
                     <input className="input" type="text" placeholder="Username" value={username}
                            onInput={event => setUsername(event.target.value)}/>
@@ -38,7 +38,7 @@ const Login = () => {
                         </span>
                 </p>
             </div>
-            <div className="field">
+            <div className="field login-input">
                 <p className="control has-icons-left">
                     <input className="input" type="password" placeholder="Password" value={password}
                            onInput={event => setPassword(event.target.value)}/>
@@ -49,7 +49,7 @@ const Login = () => {
             </div>
             <div className="field">
                 <p className="control">
-                    <button className="button is-success" onClick={handleLogin}>
+                    <button className="button is-success w-95 login-btn" onClick={handleLogin}>
                         Login
                     </button>
                 </p>
