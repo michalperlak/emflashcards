@@ -13,7 +13,6 @@ const Login = () => {
     const handleLogin = () => {
         logIn(username, password)
             .then(result => {
-                alert(result);
                 updateState({
                     user: {
                         username: username,
