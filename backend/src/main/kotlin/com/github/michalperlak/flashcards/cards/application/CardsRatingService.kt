@@ -9,6 +9,7 @@ import com.github.michalperlak.flashcards.cards.repository.CardsRepository
 import com.github.michalperlak.flashcards.time.TimeService
 import com.github.michalperlak.flashcards.users.model.UserId
 import com.github.mpps.fsrs.algorithm.FSRS
+import com.github.mpps.fsrs.algorithm.FSRSParameters
 import com.github.mpps.fsrs.model.Rating
 import io.vavr.control.Either
 import io.vavr.control.Option
@@ -28,7 +29,7 @@ class CardsRatingService(
             .map { updateRate(it, userId, rate.rating) }
 
     private fun updateRate(card: Card, userId: UserId, rating: Rating): Card {
-        val fsrs = FSRS()
+        val fsrs = FSRS(FSRSParameters())
         val userLearningState = card.learningState[userId]
         val fsrsCard = toFsrsCard(userLearningState)
         val now = timeService.getCurrentTimestamp()

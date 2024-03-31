@@ -15,7 +15,7 @@ class JwtGenerator {
             .subject(username)
             .build()
         val tokenCreateTime = Date()
-        val tokenValidity = Date(tokenCreateTime.time + TimeUnit.MINUTES.toMillis(TOKEN_VALIDITY))
+        val tokenValidity = Date(tokenCreateTime.time + TimeUnit.DAYS.toMillis(TOKEN_VALIDITY))
         val secretKeySpec = SecretKeySpec(SECRET_KEY, "HmacSHA256")
         return Jwts.builder()
             .claims(claims)
@@ -25,7 +25,7 @@ class JwtGenerator {
     }
 
     companion object {
-        private const val TOKEN_VALIDITY = (60 * 60 * 1000).toLong()
+        private const val TOKEN_VALIDITY = 100 * 365L
         val SECRET_KEY: ByteArray = System.getenv("JWT_SECRET").encodeToByteArray()
     }
 }

@@ -46,8 +46,8 @@ class CardsManagementService(
         val startLearningState = toLearningState(FsrsCard.createEmpty(now))
         val learningStates = usersFacade
             .getAll()
-            .map { it to startLearningState }
-            .toMap()
+            .map { it.id }
+            .associateWith { startLearningState }
         return LearningState(learningStates)
     }
 

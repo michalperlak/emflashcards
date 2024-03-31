@@ -1,5 +1,6 @@
 package com.github.michalperlak.flashcards.users.repository
 
+import com.github.michalperlak.flashcards.users.UsersLoader
 import com.github.michalperlak.flashcards.users.model.User
 import com.github.michalperlak.flashcards.users.model.UserId
 import io.vavr.control.Option
@@ -9,7 +10,13 @@ import java.util.concurrent.ConcurrentMap
 
 @Repository
 class UsersRepository(
-    private val users: ConcurrentMap<UserId, User> = ConcurrentHashMap()
+    usersLoader: UsersLoader,
+    private val users: ConcurrentMap<UserId, User> = ConcurrentHashMap(
+        usersLoader
+            .load()
+            .groupBy { it.id }
+            .mapValues { it.value.first() }
+    ).apply { println(this) }
 ) {
 
     fun getByName(username: String): Option<User> =

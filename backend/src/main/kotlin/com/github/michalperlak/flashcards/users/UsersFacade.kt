@@ -4,7 +4,6 @@ import com.github.michalperlak.flashcards.users.application.UserManagementServic
 import com.github.michalperlak.flashcards.users.dto.NewUserDto
 import com.github.michalperlak.flashcards.users.error.UsersError
 import com.github.michalperlak.flashcards.users.model.User
-import com.github.michalperlak.flashcards.users.model.UserId
 import io.vavr.control.Either
 import org.springframework.stereotype.Component
 
@@ -15,5 +14,5 @@ class UsersFacade(
     fun createUser(newUser: NewUserDto): Either<UsersError, User> =
         userManagementService.createUser(newUser)
 
-    fun getAll(): List<UserId> = userManagementService.getAll()
+    fun getAll(): List<User> = userManagementService.getAll()
 }

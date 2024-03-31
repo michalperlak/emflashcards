@@ -22,9 +22,7 @@ class UserManagementService(
             .map { userAlreadyExists(it) }
             .getOrElse(createNewUser(newUser))
 
-    fun getAll(): List<UserId> = usersRepository
-        .getAll()
-        .map { it.id }
+    fun getAll(): List<User> = usersRepository.getAll()
 
     override fun loadUserByUsername(username: String?): UserDetails =
         username?.let { usersRepository.getByName(it) }?.orNull
