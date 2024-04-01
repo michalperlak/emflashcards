@@ -28,7 +28,7 @@ const ReviewPage = () => {
     const [learningSession] = useState(newSession(activeSession));
 
     useEffect(() => {
-        if (learningSession.cards && learningSession.cards.length > 0) {
+        if (learningSession.cards && !learningSession.finished) {
             return;
         }
         getCardsForReview(user, learningSession)
