@@ -13,6 +13,7 @@ class CardsQueryService(
     fun getForToday(userId: UserId, states: Set<State>, limit: Int): List<Card> =
         cardsRepository
             .getAll()
+            .distinctBy { it.id }
             .filter { states.contains(it.learningState[userId].state) }
             .sortedBy { it.learningState[userId].due }
             .take(limit)
