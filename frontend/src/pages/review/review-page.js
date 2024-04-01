@@ -12,6 +12,9 @@ import './review.css';
 const getCardsForReview = async (user, learningSession) => {
     const data = await getCards(user);
     learningSession.cards = data;
+    if (data.length < 1) {
+        learningSession.finished = new Date();
+    }
 };
 
 const newSession = (activeSession) => {
@@ -28,13 +31,13 @@ const ReviewPage = () => {
     const [learningSession] = useState(newSession(activeSession));
 
     useEffect(() => {
-        if (learningSession.cards && !learningSession.finished) {
+        if (learningSession.cards && learningSession.cards.length > 0) {
             return;
         }
         getCardsForReview(user, learningSession)
             .catch(console.error)
             .then(() => updateState({activeSession: learningSession}));
-    }, [user, learningSession, updateState])
+    }, [user, learningSession])
 
     return (
         <Container>
