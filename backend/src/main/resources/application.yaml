@@ -1,11 +1,5 @@
 users:
   path: /emdata/users.json
 
-org:
-  eclipse:
-    store:
-      auto-start: true
-      root: com.github.michalperlak.flashcards.cards.model.Cards
-      storage_directory: _data
-      rest:
-        enabled: true
+cards:
+  path: /emdata/cards.json

@@ -1,12 +1,12 @@
 package com.github.michalperlak.flashcards.users.model
 
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*
 
-data class UserId @JsonCreator constructor(
-    @JsonProperty("id") private var id: String
+data class UserId(
+    val id: String
 ) {
+    override fun toString(): String = id
+
     companion object {
         fun generate(): UserId = UserId(UUID.randomUUID().toString())
     }

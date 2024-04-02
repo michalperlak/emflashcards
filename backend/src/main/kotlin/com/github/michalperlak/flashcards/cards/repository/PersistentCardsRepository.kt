@@ -1,44 +1,43 @@
 package com.github.michalperlak.flashcards.cards.repository
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.michalperlak.flashcards.cards.model.Card
 import com.github.michalperlak.flashcards.cards.model.CardId
-import com.github.michalperlak.flashcards.cards.model.Cards
 import io.vavr.control.Option
-import org.eclipse.store.integrations.spring.boot.types.concurrent.Read
-import org.eclipse.store.integrations.spring.boot.types.concurrent.Write
-import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager
-import org.springframework.stereotype.Repository
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.StandardOpenOption
+import java.util.concurrent.ConcurrentMap
+import java.util.concurrent.Executor
 
-@Repository
+
 class PersistentCardsRepository(
-    private val embeddedStorageManager: EmbeddedStorageManager
+    private val cards: ConcurrentMap<CardId, Card>,
+    private val ioExecutor: Executor,
+    private val file: Path,
+    private val mapper: ObjectMapper
 ) : CardsRepository {
 
-    @Read
-    override fun getCard(cardId: CardId): Option<Card> =
-        Option.of(getCards().all.find { it.id == cardId })
+    override fun getCard(cardId: CardId): Option<Card> = Option.of(cards[cardId])
 
-    @Write
     override fun save(card: Card): Card = card.apply {
-        val root = getCards()
-        root.all.add(card)
-        val storer = embeddedStorageManager.createEagerStorer()
-        storer.store(root)
-        storer.commit()
+        cards[card.id] = card
+        store()
     }
 
-    @Write
     override fun delete(card: Card): Card = card.apply {
-        val root = getCards()
-        root.all.remove(card)
-        val storer = embeddedStorageManager.createEagerStorer()
-        storer.store(root)
-        storer.commit()
+        cards.remove(card.id)
+        store()
     }
 
-    @Read
-    override fun getAll(): List<Card> = getCards().all.toList()
+    override fun getAll(): List<Card> = cards.values.toList()
 
-    private fun getCards(): Cards = embeddedStorageManager.root() as Cards
-
+    private fun store() {
+        ioExecutor.execute {
+            Files.write(
+                file,
+                mapper.writeValueAsBytes(cards.values), StandardOpenOption.CREATE
+            )
+        }
+    }
 }

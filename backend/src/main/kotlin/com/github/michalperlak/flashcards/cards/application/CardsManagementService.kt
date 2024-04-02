@@ -7,7 +7,6 @@ import com.github.michalperlak.flashcards.cards.repository.CardsRepository
 import com.github.michalperlak.flashcards.time.TimeService
 import com.github.michalperlak.flashcards.users.UsersFacade
 import io.vavr.control.Either
-import io.vavr.control.Option
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 import com.github.mpps.fsrs.model.Card as FsrsCard
@@ -46,7 +45,7 @@ class CardsManagementService(
         val startLearningState = toLearningState(FsrsCard.createEmpty(now))
         val learningStates = usersFacade
             .getAll()
-            .map { it.id }
+            .map { it.userId }
             .associateWith { startLearningState }
         return LearningState(learningStates)
     }
@@ -61,6 +60,6 @@ class CardsManagementService(
             state = fsrsCard.state,
             stability = fsrsCard.stability,
             difficulty = fsrsCard.difficulty,
-            lastReview = Option.none()
+            lastReview = null
         )
 }

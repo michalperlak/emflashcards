@@ -3,13 +3,13 @@ package com.github.michalperlak.flashcards.cards.model
 import java.time.OffsetDateTime
 
 data class Card(
-    var id: CardId,
-    var category: Category,
-    var question: Question,
-    var answer: Answer,
-    var notes: List<Note>,
-    var created: OffsetDateTime,
-    var learningState: LearningState
+    val id: CardId,
+    val category: Category,
+    val question: Question,
+    val answer: Answer,
+    val notes: List<Note>,
+    val created: OffsetDateTime,
+    val learningState: LearningState
 ) {
     fun addNote(note: Note): Card = copy(notes = notes + note)
 }

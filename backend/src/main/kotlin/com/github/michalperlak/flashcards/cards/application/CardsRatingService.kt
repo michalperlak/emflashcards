@@ -56,7 +56,7 @@ class CardsRatingService(
             state = learningState.state,
             stability = learningState.stability,
             difficulty = learningState.difficulty,
-            lastReview = learningState.lastReview.orNull
+            lastReview = learningState.lastReview
         )
 
     private fun toLearningState(fsrsCard: FsrsCard, now: OffsetDateTime): UserLearningState =
@@ -69,7 +69,7 @@ class CardsRatingService(
             state = fsrsCard.state,
             stability = fsrsCard.stability,
             difficulty = fsrsCard.difficulty,
-            lastReview = Option.of(now)
+            lastReview = now
         )
 
 }

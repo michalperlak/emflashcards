@@ -72,7 +72,7 @@ class CardsController(
             .getOrElseGet { ResponseEntity.badRequest().body(it) }
 
     private fun userId(userDetails: UserDetails) =
-        (userDetails as User).id
+        (userDetails as User).userId
 
     private fun toResponseEntity(note: Note): ResponseEntity<*> =
         ResponseEntity.ok(NoteDto.from(note))

@@ -14,9 +14,9 @@ class UsersRepository(
     private val users: ConcurrentMap<UserId, User> = ConcurrentHashMap(
         usersLoader
             .load()
-            .groupBy { it.id }
+            .groupBy { it.userId }
             .mapValues { it.value.first() }
-    ).apply { println(this) }
+    )
 ) {
 
     fun getByName(username: String): Option<User> =
@@ -26,6 +26,6 @@ class UsersRepository(
                 .findFirst()
         )
 
-    fun addUser(user: User): User = user.apply { users[id] = this }
+    fun addUser(user: User): User = user.apply { users[userId] = this }
     fun getAll(): List<User> = users.values.toList()
 }

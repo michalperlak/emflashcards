@@ -30,7 +30,7 @@ class UserManagementService(
 
     private fun createNewUser(newUser: NewUserDto): Either<UsersError, User> {
         val user = User(
-            id = UserId.generate(),
+            userId = UserId.generate(),
             name = newUser.name,
             passwordHash = passwordEncoder.encode(newUser.password)
         )

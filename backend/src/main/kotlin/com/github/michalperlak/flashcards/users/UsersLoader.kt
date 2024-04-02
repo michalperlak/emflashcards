@@ -2,6 +2,7 @@ package com.github.michalperlak.flashcards.users
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.github.michalperlak.flashcards.users.model.User
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
@@ -19,6 +20,6 @@ class UsersLoader(
         )
         return Files
             .newInputStream(usersFile)
-            .use { objectMapper.readValue(it, object : TypeReference<List<User>>() {}) }
+            .use { objectMapper.readValue(it) }
     }
 }

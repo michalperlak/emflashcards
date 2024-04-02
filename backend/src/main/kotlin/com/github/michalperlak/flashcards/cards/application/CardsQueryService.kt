@@ -15,13 +15,17 @@ class CardsQueryService(
     private val cardsRepository: CardsRepository,
     private val timeService: TimeService
 ) {
-    fun getForToday(userId: UserId, states: Set<State>, limit: Int): List<Card> =
-        cardsRepository
+    fun getForToday(userId: UserId, states: Set<State>, limit: Int): List<Card> {
+        println(userId)
+        println(cardsRepository.getAll())
+        return cardsRepository
             .getAll()
             .distinctBy { it.id }
             .filter { states.contains(it.learningState[userId].state) && isForNextReview(it.learningState[userId]) }
             .sortedBy { it.learningState[userId].due }
             .take(limit)
+    }
+
 
     private fun isForNextReview(learningState: UserLearningState): Boolean {
         val now = timeService.getCurrentTimestamp()

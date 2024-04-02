@@ -1,17 +1,16 @@
 package com.github.michalperlak.flashcards.cards.model
 
 import com.github.mpps.fsrs.model.State
-import io.vavr.control.Option
 import java.time.OffsetDateTime
 
 data class UserLearningState(
-    var due: OffsetDateTime,
-    var elapsedDays: Long,
-    var scheduledDays: Long,
-    var reps: Long,
-    var lapses: Long,
-    var state: State,
-    var stability: Double,
-    var difficulty: Double,
-    var lastReview: Option<OffsetDateTime>
+    val due: OffsetDateTime,
+    val elapsedDays: Long,
+    val scheduledDays: Long,
+    val reps: Long,
+    val lapses: Long,
+    val state: State,
+    val stability: Double,
+    val difficulty: Double,
+    val lastReview: OffsetDateTime?
 )
